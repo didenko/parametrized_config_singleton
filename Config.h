@@ -4,13 +4,12 @@
 class Config {
 
 public:
-  typedef std::function<void(std::string)> DupInitCB;
 
-  static void init(std::string loc, DupInitCB err_cb);
-  static Config& instance();
+  static bool init(std::string loc);
+  static std::shared_ptr<Config> instance();
 
 private:
-  static std::unique_ptr<Config> cfg;
+  static std::shared_ptr<Config> cfg;
   static std::mutex init_mutex;
 
   std::string url;
