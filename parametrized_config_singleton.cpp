@@ -20,15 +20,23 @@ int _tmain(int argc, _TCHAR* argv[])
     return 1;
   }
 
-  Config::init(
-    "http://cnf.local/dev",
-    [](std::string loc){ std::cout << "Duplicate Config init (" << loc << ")" << std::endl; }
-  );
+  try {
+    Config::init("http://cnf.local/dev");
+  }
+  catch (...) {
+    std::cerr << "Thrown an unexpected exception when called to Config:init()." << std::endl;
+  }
 
-  Config::init(
-    "http://cnf.local/prod",
-    [](std::string loc){ std::cout << "Duplicate Config init (" << loc << ")" << std::endl; }
-  );
+  try {
+    Config::init("http://cnf.local/prod");
+    std::cerr << "Did not trow an exception when initializing Config second time." << std::endl;
+  }
+  catch (std::logic_error e) {
+    std::cerr << "Properly thrown an error when initializing Config second time." << std::endl;
+  }
+  catch (...) {
+    std::cerr << "Thrown an unexpected exception when called to Config::init()." << std::endl;
+  }
 
   std::cout << Config::instance().val("Upstream") << std::endl;
 	return 0;

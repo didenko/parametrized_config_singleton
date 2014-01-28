@@ -4,15 +4,14 @@
 std::unique_ptr<Config> Config::cfg;
 std::mutex Config::init_mutex;
 
-void Config::init(std::string loc, DupInitCB err_cb) {
+void Config::init(std::string loc) {
   std::lock_guard<std::mutex> lock(init_mutex);
   if (cfg != nullptr) {
-    err_cb(loc);
+    throw std::logic_error("Improper duplicate Config init: " + loc);
   } else {
     cfg.reset(new Config(loc));
   };
 };
-
 
 Config& Config::instance() {
   if (cfg == nullptr) throw std::logic_error("Requested uninitialized Config");

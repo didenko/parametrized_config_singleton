@@ -4,9 +4,8 @@
 class Config {
 
 public:
-  typedef std::function<void(std::string)> DupInitCB;
 
-  static void init(std::string loc, DupInitCB err_cb);
+  static void init(std::string loc);
   static Config& instance();
 
 private:
