@@ -27,10 +27,8 @@ int _tmain(int argc, _TCHAR* argv[])
 
   Config::init(
     "http://cnf.local/prod",
-    [](std::string loc){
-      std::cout <<
-        "Duplicate Config init (" << loc << ")" << std::endl;
-  });
+    [](std::string loc){ std::cout << "Duplicate Config init (" << loc << ")" << std::endl; }
+  );
 
   std::cout << Config::instance().val("Upstream") << std::endl;
 	return 0;
